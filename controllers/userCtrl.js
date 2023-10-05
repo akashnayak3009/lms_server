@@ -2,6 +2,8 @@ import { generateToken } from "../config/jwtToken.js";
 import { validateMongodbId } from "../config/validateMongoDbId.js";
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
+import crypto from "crypto";
+import { sendEmail } from "./emailCtrl.js";
 
 // Create a User
 
@@ -157,3 +159,52 @@ export const updatePassword = asyncHandler(async (req, res) => {
         throw new Error(error);
     }
 });
+
+//Forgot password token
+
+export const forgotPasswordToken = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new Error("User Not exists with this email.");
+    }
+    try {
+        const token = await user.createPasswordResetToken();
+        await user.save();
+        const resetLink = `http://localhost:5000/api/user/reset-password/${token};`;
+        const data ={                                                        // SSL/TLS version has giving error. so that it is not sending the email otherwise giving the token
+            to:email,
+            text:`Hey ${user.firstname +" " + user.lastname}`,
+            subject: " Forgot Password",
+            html: resetLink,
+        };
+        sendEmail(data);
+        res.status(200).json(resetLink);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+//Reset password
+
+export const resetPassword = asyncHandler(async (req, res) => {
+    const { password } = req.body;
+    const { token } = req.params;
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gt: Date.now() },
+    });
+    if(!user) throw new Error("Token expires, Please try again.")
+
+    user.password = password;
+    user.passwordResetToken= undefined;
+    user.passwordResetExpires= undefined;
+    await user.save();
+    res.status(200).json({
+        status:true,
+        message:"Password Reset successfully"
+    })
+});
+
+
