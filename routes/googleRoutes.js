@@ -64,11 +64,23 @@ const googleRouter = express.Router();
 googleRouter.get(
     "/login/success",
     expressAsyncHandler(async (req, res) => {
-        console.log("success");
-        res.status(200).json({
-            status: true,
-            message: "Login Success",
-        });
+       if(req.user){
+        const findUser = await User.findOne({email:req.user.email});
+        if(findUser){
+            res.status(200).json({
+                status: true,
+                message: "Login successfully",
+                token: generateToken(findUser?._id),
+                role: findUser?.roles,
+                username: findUser?.firstname + " " + findUser?.lastname,
+                user_image: findUser?.user_image,
+                from: 'google'
+            })
+        }
+       }
+       else{
+        throw new Error(" Something went wrong")
+       }
     })
 );
 
@@ -85,7 +97,7 @@ googleRouter.get(
 // Initiate Google OAuth2 authentication
 googleRouter.get(
     "/google",
-    passport.authenticate("google", ["profile", "email"])
+    passport.authenticate("google", {scope :["profile", "email"]})
 );
 
 // Handle Google OAuth2 callback

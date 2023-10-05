@@ -25,13 +25,11 @@ let userSchema = new mongoose.Schema(
         },
         mobile: {
             type: String,
-            required: true,
             unique: true,
             index: true,
         },
         password: {
             type: String,
-            required: true,
         },
         roles: {
             type: String,
@@ -39,7 +37,6 @@ let userSchema = new mongoose.Schema(
         },
         profession: {
             type: String,
-            required: true,
         },
         isblocked: {
             type: Boolean,
