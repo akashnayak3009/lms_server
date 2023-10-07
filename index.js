@@ -10,6 +10,8 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "./utils/passport.js";
 import googleRouter from "./routes/googleRoutes.js";
+import tutCatRouter from "./routes/tutCatRoutes.js";
+import tutorialRouter from "./routes/tutorialRoutes.js";
 
 
 const app = express();
@@ -49,8 +51,11 @@ app.get('/',(req,res)=>{
     res.send(`<a href="http://localhost:5000/google"> Login with Google </a>`)
 })
 
+//Routers
 app.use("/api/user", userRouter);
-app.use('/',googleRouter)
+app.use('/',googleRouter);
+app.use("/api/tutorial/category",tutCatRouter);
+app.use('/api/tutorial',tutorialRouter)
 
 //Error handling routes
 app.use(notFound);
