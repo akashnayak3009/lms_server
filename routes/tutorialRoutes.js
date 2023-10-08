@@ -8,7 +8,7 @@ import {
     updateTutorial,
 } from "../controllers/tutorialCtrl.js";
 
-const tutorialRouter = express.Router();
+const tutorialRouter = express.Router(); 
 
 tutorialRouter.post("/", authMiddleware, isAdmin, postTutorial);
 tutorialRouter.get("/:type/:slug", getATutorial);

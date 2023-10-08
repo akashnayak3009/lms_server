@@ -84,7 +84,6 @@ export const deleteTutorial =asyncHandler(async(req,res)=>{
 })
 
 //GET ALL TUTORIAL
-//DELETE TUTORIAL
 export const getAllTutorial =asyncHandler(async(req,res)=>{
     try{
         const getAllTut = await Tutorial.find();

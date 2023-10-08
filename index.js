@@ -12,6 +12,9 @@ import passport from "./utils/passport.js";
 import googleRouter from "./routes/googleRoutes.js";
 import tutCatRouter from "./routes/tutCatRoutes.js";
 import tutorialRouter from "./routes/tutorialRoutes.js";
+import newsLetterRouter from "./routes/newsLetterRoutes.js";
+import reviewRouter from "./routes/reviewRoutes.js";
+import contactRouter from "./routes/contactRoutes.js";
 
 
 const app = express();
@@ -56,6 +59,9 @@ app.use("/api/user", userRouter);
 app.use('/',googleRouter);
 app.use("/api/tutorial/category",tutCatRouter);
 app.use('/api/tutorial',tutorialRouter)
+app.use('/api/newsLetter', newsLetterRouter);
+app.use('/api/review', reviewRouter)
+app.use('/api/contact', contactRouter)
 
 //Error handling routes
 app.use(notFound);
