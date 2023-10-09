@@ -15,6 +15,8 @@ import tutorialRouter from "./routes/tutorialRoutes.js";
 import newsLetterRouter from "./routes/newsLetterRoutes.js";
 import reviewRouter from "./routes/reviewRoutes.js";
 import contactRouter from "./routes/contactRoutes.js";
+import videoRouter from "./routes/videoRoutes.js";
+import documentRouter from "./routes/documentationRoutes.js";
 
 
 const app = express();
@@ -55,13 +57,15 @@ app.get('/',(req,res)=>{
 })
 
 //Routers
-app.use("/api/user", userRouter);
+app.use("/api/user", userRouter); 
 app.use('/',googleRouter);
 app.use("/api/tutorial/category",tutCatRouter);
 app.use('/api/tutorial',tutorialRouter)
 app.use('/api/newsLetter', newsLetterRouter);
 app.use('/api/review', reviewRouter)
 app.use('/api/contact', contactRouter)
+app.use('/api/video', videoRouter);
+app.use('/api/document', documentRouter);
 
 //Error handling routes
 app.use(notFound);
