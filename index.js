@@ -17,6 +17,11 @@ import reviewRouter from "./routes/reviewRoutes.js";
 import contactRouter from "./routes/contactRoutes.js";
 import videoRouter from "./routes/videoRoutes.js";
 import documentRouter from "./routes/documentationRoutes.js";
+import docCatRouter from "./routes/docCatRoutes.js";
+import blogCatRouter from "./routes/blogCatRoutes.js";
+import blogRouter from "./routes/blogRoutes.js";
+import videoCatRouter from "./routes/videoCatRoutes.js";
+import courseCatRouter from "./routes/courseCatRoutes.js";
 
 
 const app = express();
@@ -65,7 +70,12 @@ app.use('/api/newsLetter', newsLetterRouter);
 app.use('/api/review', reviewRouter)
 app.use('/api/contact', contactRouter)
 app.use('/api/video', videoRouter);
+app.use('/api/videoCat', videoCatRouter);
 app.use('/api/document', documentRouter);
+app.use('/api/docCat', docCatRouter);
+app.use('/api/blogCat', blogCatRouter);
+app.use('/api/blog',blogRouter);
+app.use('/api/courseCat', courseCatRouter);
 
 //Error handling routes
 app.use(notFound);
