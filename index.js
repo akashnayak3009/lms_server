@@ -22,6 +22,7 @@ import blogCatRouter from "./routes/blogCatRoutes.js";
 import blogRouter from "./routes/blogRoutes.js";
 import videoCatRouter from "./routes/videoCatRoutes.js";
 import courseCatRouter from "./routes/courseCatRoutes.js";
+import courseRouter from "./routes/courseRoutes.js";
 
 
 const app = express();
@@ -76,6 +77,7 @@ app.use('/api/docCat', docCatRouter);
 app.use('/api/blogCat', blogCatRouter);
 app.use('/api/blog',blogRouter);
 app.use('/api/courseCat', courseCatRouter);
+app.use('/api/course',courseRouter);
 
 //Error handling routes
 app.use(notFound);

@@ -48,17 +48,16 @@ const courseSchema = new mongoose.Schema(
     lessons: [
       {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "User",
-        required: true,
+        ref: "Lesson",
       },
     ],
     totalHours: {
       type: String,
-      required: true,
+      deault:0,
     },
     enrolls: {
       type: String,
-      required: true,
+      default:0,
     },
     ratings: [
       {
@@ -72,7 +71,7 @@ const courseSchema = new mongoose.Schema(
     ],
     totalRatings: {
       type: Number,
-      required: true,
+      default:0,
     },
   },
   { timestamps: true }
