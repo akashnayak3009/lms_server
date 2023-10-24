@@ -8,6 +8,7 @@ import {
   getParticularInstructorCourses,
   updateCourse,
 } from "../controllers/courseCtrl.js";
+import { createLesson, deleteLesson, getALesson, getAllCourseLesson, updateLesson } from "../controllers/lessonCtrl.js";
 
 const courseRouter = express.Router();
 
@@ -22,5 +23,22 @@ courseRouter.get(
   isBoth,
   getParticularInstructorCourses
 );
+
+
+
+/*====================Lesson===============*/
+
+courseRouter.post('/lesson/:courseId',authMiddleware,isBoth, createLesson)
+courseRouter.put('/lesson/:courseId/:lessonId',authMiddleware,isBoth,deleteLesson)
+courseRouter.get('/lesson/:lessonId', authMiddleware, isBoth,getALesson );
+courseRouter.get('/lesson/all/:courseId', authMiddleware, isBoth,getAllCourseLesson );
+courseRouter.put('/lesson/:lessonId', authMiddleware, isBoth,updateLesson );
+
+
+
+
+
+
+
 
 export default courseRouter;
