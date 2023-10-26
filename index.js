@@ -23,6 +23,8 @@ import blogRouter from "./routes/blogRoutes.js";
 import videoCatRouter from "./routes/videoCatRoutes.js";
 import courseCatRouter from "./routes/courseCatRoutes.js";
 import courseRouter from "./routes/courseRoutes.js";
+import rateLimit from "express-rate-limit";
+import rateLimitter from "./utils/reqLimit.js";
 
 
 const app = express();
@@ -61,6 +63,9 @@ app.use(
 app.get('/',(req,res)=>{
     res.send(`<a href="http://localhost:5000/google"> Login with Google </a>`)
 })
+
+//Route-rate-limiter
+app.use('/api', rateLimitter())  // app.use('/api', rateLimitter(100000,'hours',50,'Too many Request please try again after some time'))
 
 //Routers
 app.use("/api/user", userRouter); 

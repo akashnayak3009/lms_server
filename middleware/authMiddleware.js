@@ -33,14 +33,20 @@ export const authMiddleware = asyncHandler(async (req, res, next) => {
           req.user = user;
           next();
         } else {
-            return res.status(500).json({ status: false, message: "User Not Found" });
+          return res
+            .status(500)
+            .json({ status: false, message: "User Not Found" });
         }
       }
     } catch (error) {
-        return res.status(500).json({ status: false, message: "Not Authorised, Please Login Again" });
+      return res
+        .status(500)
+        .json({ status: false, message: "Not Authorised, Please Login Again" });
     }
   } else {
-    return res.status(500).json({ status: false, message: "No Token Provided" });
+    return res
+      .status(500)
+      .json({ status: false, message: "No Token Provided" });
   }
 });
 
@@ -109,3 +115,24 @@ export const isBoth = asyncHandler(async (req, res, next) => {
     return res.status(500).json({ status: false, message: "Server error" });
   }
 });
+
+//  ISBOTH OR ISADMIN OR ISINSTRUCTOR
+
+// export const restrictTo = (...roles) => {
+//   return asyncHandler(async (req, res, next) => {
+//     if (!roles.includes(req.user.roles)) {
+//       return res
+//         .status(403)
+//         .json({ status: false, message: "You are not authorised" });
+//     } else {
+//       next();
+//     }
+//   });
+// };
+
+
+// USER CAN USE THIS
+
+// restrictTo("admin", "user")
+
+// contactRouter.get("/:id", authMiddleware, restrictTO("user", "admin"), getAContact); 
