@@ -26,6 +26,7 @@ import courseRouter from "./routes/courseRoutes.js";
 import rateLimit from "express-rate-limit";
 import rateLimitter from "./utils/reqLimit.js";
 import workRouter from "./routes/workRoutes.js";
+import projectCatRouter from "./routes/projectCatRoutes.js";
 
 
 const app = express();
@@ -85,6 +86,7 @@ app.use('/api/blog',blogRouter);
 app.use('/api/courseCat', courseCatRouter);
 app.use('/api/course',courseRouter);
 app.use('/api/work',workRouter)
+app.use('/api/projectCat', projectCatRouter)
 
 //Error handling routes
 app.use(notFound);
