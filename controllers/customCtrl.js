@@ -2,6 +2,7 @@ import Work from "../models/workWithUsModel.js";
 import asyncHandler from "express-async-handler";
 import { validateMongodbId } from "../config/validateMongoDbId.js";
 import APIFeatures from "../utils/apiFeature.js";
+import slugify from "slugify";
 
 export const createOne = (Model) => {
   return asyncHandler(async (req, res) => {
