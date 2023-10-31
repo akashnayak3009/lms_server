@@ -28,6 +28,7 @@ import rateLimitter from "./utils/reqLimit.js";
 import workRouter from "./routes/workRoutes.js";
 import projectCatRouter from "./routes/projectCatRoutes.js";
 import projectRouter from "./routes/projectRoutes.js";
+import bookRouter from "./routes/bookRoutes.js";
 
 
 const app = express();
@@ -89,6 +90,7 @@ app.use('/api/course',courseRouter);
 app.use('/api/work',workRouter)
 app.use('/api/project',projectRouter)
 app.use('/api/projectCat', projectCatRouter)
+app.use('/api/book-session', bookRouter);
 
 //Error handling routes
 app.use(notFound);
