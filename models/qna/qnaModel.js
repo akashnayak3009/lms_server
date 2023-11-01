@@ -5,6 +5,10 @@ const qnaSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
     },
+    slug:{
+        type:String,
+        required:true,
+    },
     question:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Question",
@@ -20,5 +24,5 @@ const qnaSchema = new mongoose.Schema({
 },{timestamps:true});
 
 
-const QNA = mongoose.model("QNA", qnaSchema);
-export default QNA
+const Qna = mongoose.model("Qna", qnaSchema);
+export default Qna
