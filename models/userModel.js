@@ -48,6 +48,7 @@ let userSchema = new mongoose.Schema(
         stripe_account_id: String,
         stripe_seller: {},
         stripSession: {},
+        courses:[],
     },
     {
         timestamps: true,

@@ -6,6 +6,7 @@ import { validateMongodbId } from "../../config/validateMongoDbId.js";
 import slugify from "slugify";
 import { getAll, getOne, updateOne } from "../customCtrl.js";
 import Qnatag from "../../models/qna/tagModel.js";
+import Qnacomment from "../../models/qna/qnacomment.js";
 
 export const createPost = asyncHandler(async (req, res) => {
   const { id } = req.user;
@@ -99,12 +100,21 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
 });
 
 export const addComment = asyncHandler(async (req, res) => {
-    const {quesId} =req.params;
-    const {id} =req.user;
-    validateMongodbId(id);
-    validateMongodbId(postId);
+  const { quesId } = req.params;
+  const { id } = req.user;
+  validateMongodbId(id);
+  validateMongodbId(quesId);
   try {
-    const findQuestion =  await Question.findByIdAndUpdate(quesId,{},{new:true})
+    const createComment = await Qnacomment.create({
+      user: id,
+      comment: req.body.comment,
+    });
+    const findQuestion = await Question.findByIdAndUpdate(
+      quesId,
+      { $push: { comments: createComment._id } },
+      { new: true }
+    );
+    return res.status(200).json({ status: true, message: "Add comment" });
   } catch (error) {
     return res
       .status(500)
@@ -113,12 +123,21 @@ export const addComment = asyncHandler(async (req, res) => {
 });
 
 export const deleteComment = asyncHandler(async (req, res) => {
-    try {
-      
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, message: "Failed Delete comment" });
-    }
-  });
-  
+  const { quesId, commentId } = req.params;
+  const { id } = req.user;
+  validateMongodbId(commentId);
+  validateMongodbId(quesId);
+  try {
+    const deleteComment = await Qnacomment.findByIdAndDelete(commentId);
+    const findQuestion = await Question.findByIdAndUpdate(
+      quesId,
+      { $pull: { comments: commentId } },
+      { new: true }
+    );
+    return res.status(200).json({ status: true, message: "Comment Deleted" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: false, message: "Failed Delete comment" });
+  }
+});

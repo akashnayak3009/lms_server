@@ -1,7 +1,9 @@
 import express from "express";
 import {
+  addComment,
   createAnswer,
   createPost,
+  deleteComment,
   deleteQuestion,
   getAllQuestion,
   getQuestion,
@@ -22,6 +24,7 @@ const qnaRouter = express.Router();
 qnaRouter.post("/post", authMiddleware, createPost);
 qnaRouter.post("/post/answer/:postId", authMiddleware, createAnswer);
 qnaRouter.post("/tag", authMiddleware, isAdmin, postTag);
+qnaRouter.post("/post/comment/:quesId", authMiddleware, addComment);
 
 qnaRouter.put("/post/:id", authMiddleware, updateQuestion);
 qnaRouter.put("/tag/:id", authMiddleware, isAdmin, updateTag);
@@ -36,6 +39,11 @@ qnaRouter.delete(
   "/post/:postId/:quesId/:ansId?",
   authMiddleware,
   deleteQuestion
+);
+qnaRouter.delete(
+  "/post/comment/:quesId/:commentId",
+  authMiddleware,
+  deleteComment
 );
 qnaRouter.delete("/tag/:id", authMiddleware, isAdmin, deleteTag);
 
